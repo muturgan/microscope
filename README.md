@@ -65,3 +65,4 @@ npm run build_env             # production-сборка с загрузкой п
 - [Соглашения о стилизации](docs/style.md)
 - [Проверка проекта](docs/testing.md)
 - [Структура проекта](docs/struct.md)
+- [План задач](TODO.md)

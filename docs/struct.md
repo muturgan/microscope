@@ -23,6 +23,7 @@ microscope/
 ├── package-lock.json                       — Зафиксированное дерево npm-зависимостей
 ├── package.json                            — Манифест проекта, npm-скрипты и зависимости Preact, React Flow, nanostores
 ├── README.md                               — Описание проекта, установка и запуск локальной разработки
+├── TODO.md                                 — Список запланированных задач проекта
 ├── tsconfig.json                           — TypeScript-конфигурация: strict mode, Preact JSX, алиасы react → preact/compat
 ├── vite.config.js                          — Конфигурация Vite: Preact, dev-сервер, HMR, aliases и production-сборка
 └── src/
