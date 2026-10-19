@@ -1,0 +1,42 @@
+root = true
+
+[*]
+end_of_line = lf
+charset = utf-8
+trim_trailing_whitespace = true
+insert_final_newline = true
+
+[*.ts]
+indent_size = 3
+indent_style = tab
+
+[*.tsx]
+indent_size = 3
+indent_style = tab
+
+[*.js]
+indent_size = 3
+indent_style = tab
+
+[*.html]
+indent_size = 3
+indent_style = tab
+
+[*.css]
+indent_size = 3
+indent_style = tab
+
+[*.json]
+indent_size = 2
+indent_style = tab
+
+[*.yml]
+indent_size = 2
+indent_style = space
+
+[*.sh]
+indent_size = 3
+indent_style = tab
+
+[*.md]
+trim_trailing_whitespace = false

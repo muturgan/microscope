@@ -1,0 +1,39 @@
+{
+	"name": "microscope",
+	"private": true,
+	"version": "0.0.0",
+	"type": "module",
+	"scripts": {
+		"dev": "export $(cat .env | grep -v '^#' | xargs) && vite",
+		"force": "vite --force",
+		"build": "tsc --noEmit && vite build",
+		"build_env": "tsc --noEmit && export $(cat .env | grep -v '^#' | xargs) && vite build",
+		"preview": "npm run build && export $(cat .env | grep -v '^#' | xargs) && vite preview",
+		"tsc": "tsc",
+		"prebuild": "rm -rf dist || npx rimraf dist",
+		"lint": "eslint ./src"
+	},
+	"dependencies": {
+		"@nanostores/preact": "^1.1.1",
+		"@xyflow/react": "^12.12.0",
+		"nanostores": "^1.5.5",
+		"preact": "^11.0.1",
+		"preact-router": "^4.1.2"
+	},
+	"devDependencies": {
+		"@eslint/js": "^10.0.1",
+		"@preact/preset-vite": "^2.10.6",
+		"esbuild": "^0.28.2",
+		"eslint": "^9.7",
+		"eslint-config-prettier": "^10.1.8",
+		"eslint-plugin-node-import": "^1.2.0",
+		"eslint-plugin-prettier": "^5.5.7",
+		"eslint-plugin-react": "^7.37.5",
+		"eslint-plugin-simple-import-sort": "^12.1.1",
+		"prettier": "^3.9.10",
+		"terser": "^5.51.2",
+		"typescript": "^6",
+		"typescript-eslint": "^8.71.2",
+		"vite": "^8.3.4"
+	}
+}
