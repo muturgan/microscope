@@ -1,5 +1,7 @@
 import { h } from 'preact';
 
+import { useEscapeKey } from '../../hooks/useEscapeKey';
+
 interface IConfirmModalProps {
 	heading: string;
 	hint: string;
@@ -19,6 +21,8 @@ export function ConfirmModal({
 	onCancel,
 	onConfirm,
 }: IConfirmModalProps) {
+	useEscapeKey({ onEscape: onCancel });
+
 	return (
 		<div className="modal-backdrop">
 			<div

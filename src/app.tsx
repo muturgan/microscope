@@ -180,7 +180,6 @@ export function App() {
 		<Fragment>
 			<AppHeader
 				settingName={settingName}
-				cardsCount={cards.length}
 				onSave={handleSave}
 				onRequestReset={() => setIsResetConfirmOpen(true)}
 				onUpdateSettingName={updateSettingName}

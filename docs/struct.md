@@ -19,22 +19,24 @@ microscope/
 │   ├── struct.md                           — Структура проекта и описание файлов
 │   ├── style.md                            — Соглашения о CSS, дизайн-токенах, единицах, тултипах и состояниях
 │   └── testing.md                          — Автоматические проверки и ручные сценарии тестирования
-├── index.html                              — HTML-точка входа Vite: body (корневой контейнер и блок оболочки) и загрузка src/main.tsx
+├── index.html                              — HTML-точка входа Vite: загрузка src/main.tsx и подключение desktop.css с media="(min-width: 621px)"
 ├── package-lock.json                       — Зафиксированное дерево npm-зависимостей
 ├── package.json                            — Манифест проекта, npm-скрипты и зависимости Preact, React Flow, nanostores
 ├── README.md                               — Описание проекта, установка и запуск локальной разработки
 ├── TODO.md                                 — Список запланированных задач проекта
 ├── tsconfig.json                           — TypeScript-конфигурация: strict mode, Preact JSX, алиасы react → preact/compat
-├── vite.config.js                          — Конфигурация Vite: Preact, dev-сервер, HMR, aliases и production-сборка
+├── vite.config.js                          — Конфигурация Vite: Preact, dev-сервер, HMR, aliases, сборка CSS без инлайна и минификация HTML
 └── src/
     ├── main.tsx                            — Точка входа приложения: подключение стилей и render(<App />, document.body)
     ├── app.tsx                             — Оркестратор приложения: stores, состояние модалок, обработчики CRUD/импорта/сохранения/сброса
-    ├── style.css                            — Глобальные стили: дизайн-токены, карточки, React Flow, формы, тултипы, адаптивность
     ├── vite-env.d.ts                       — Ambient-типы Vite
+    ├── styles/
+    │   ├── mobile.css                      — Mobile-first стили: все базовые правила и токены для любого экрана (без медиавыражений)
+    │   └── desktop.css                     — Только переопределения внутри @media (min-width: 621px); собирается отдельным файлом
     ├── config/
     │   └── cardUi.ts                       — UI-конфигурация карточек: подписи kind, примеры названий, placeholder’ы, настройки редактирования/удаления
     ├── components/
-    │   ├── AppHeader.tsx                   — Шапка: название и inline-редактирование сеттинга, счётчик периодов, кнопки сброса и сохранения
+    │   ├── AppHeader.tsx                   — Шапка: название и inline-редактирование сеттинга, краткая подсказка, кнопки сброса и сохранения
     │   ├── CardFlow.tsx                    — Построение React Flow nodes/edges и отрисовка графа периодов
     │   ├── cards/
     │   │   ├── CardActionButtons.tsx       — Общие кнопки действий: добавление, редактирование и удаление
@@ -43,10 +45,12 @@ microscope/
     │   │   └── PeriodNode.tsx              — React Flow-узел периода: карточка периода, события, сцены и nodeTypes
     │   └── forms/
     │       ├── CardFields.tsx              — Переиспользуемые поля названия и типа карточки с автофокусом
-    │       ├── CardForm.tsx                — Универсальная модалка создания/редактирования карточки
-    │       ├── ConfirmModal.tsx            — Универсальное модальное окно подтверждения действия
+    │       ├── CardForm.tsx                — Универсальная модалка создания/редактирования карточки (ESC закрывает)
+    │       ├── ConfirmModal.tsx            — Универсальное модальное окно подтверждения действия (ESC закрывает)
     │       ├── DeleteConfirmModal.tsx      — Подтверждение удаления периода/события/сцены с описанием каскадного удаления
     │       └── InitialPeriodsForm.tsx      — Стартовая модалка: название сеттинга, два периода и импорт JSON
+    ├── hooks/
+    │   └── useEscapeKey.ts                 — Хук подписки на Escape для закрытия модальных окон
     ├── stores/
     │   ├── cards.ts                        — Barrel-файл публичного API stores
     │   ├── cardsStore.ts                   — Atoms состояния, инициализация/замена/сброс, подписка на автосохранение в localStorage

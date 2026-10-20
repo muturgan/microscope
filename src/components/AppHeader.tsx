@@ -3,7 +3,6 @@ import { useEffect, useRef, useState } from 'preact/hooks';
 
 interface IAppHeaderProps {
 	settingName: string;
-	cardsCount: number;
 	onSave: () => void;
 	onRequestReset: () => void;
 	onUpdateSettingName: (settingName: string) => void;
@@ -11,7 +10,6 @@ interface IAppHeaderProps {
 
 export function AppHeader({
 	settingName,
-	cardsCount,
 	onSave,
 	onRequestReset,
 	onUpdateSettingName,
@@ -104,19 +102,22 @@ export function AppHeader({
 						</>
 					)}
 				</div>
-				<p className="app-header__subtitle">
-					Кнопки с символами:{' '}
-					<span className="app-header__hint-key">+⏳</span> — новый период
-					между соседними,{' '}
-					<span className="app-header__hint-key">+⚡</span> — событие в
-					периоде, <span className="app-header__hint-key">+🎭</span> —
-					сцена в событии.
-				</p>
+				<div className="app-header__hints">
+					<span className="app-header__hint">
+						<span className="app-header__hint-key">+⏳</span>
+						добавить новый период
+					</span>
+					<span className="app-header__hint">
+						<span className="app-header__hint-key">+⚡</span>
+						добавить событие в период
+					</span>
+					<span className="app-header__hint">
+						<span className="app-header__hint-key">+🎭</span>
+						добавить сцену в событие
+					</span>
+				</div>
 			</div>
 			<div className="app-header__actions">
-				<span className="app-header__count">
-					{cardsCount} {cardsCount === 1 ? 'период' : 'периодов'}
-				</span>
 				<button
 					type="button"
 					className="button button--ghost app-header__save-button tooltip-bottom"
@@ -132,7 +133,6 @@ export function AppHeader({
 					className="button button--ghost app-header__save-button tooltip-bottom"
 					data-tooltip="Сохранить состояние в JSON-файл"
 					aria-label="Сохранить состояние в JSON-файл"
-					disabled={cardsCount === 0}
 					onClick={onSave}
 				>
 					<span aria-hidden="true">💾</span>

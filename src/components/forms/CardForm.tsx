@@ -6,6 +6,7 @@ import {
 	getRandomPlaceholder,
 	type ICardKindLabels,
 } from '../../config/cardUi';
+import { useEscapeKey } from '../../hooks/useEscapeKey';
 import { CardKind } from '../../types/card';
 
 interface ICardFormProps {
@@ -42,6 +43,8 @@ export function CardForm({
 		lockedKind ?? initialKind ?? CardKind.Good,
 	);
 	const [placeholder] = useState(() => getRandomPlaceholder(examples));
+
+	useEscapeKey({ onEscape: onCancel });
 
 	const normalizedTitle = title.trim();
 

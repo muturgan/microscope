@@ -11,7 +11,7 @@ import {
 import { nodeTypes } from './cards/PeriodNode';
 import type { CardFlowNode, ICardEditTarget, IPeriodCard } from '../types/card';
 
-// Шаг по X для React Flow: --period-card-width + 70px из style.css.
+// Шаг по X для React Flow: --period-card-width + 70px из styles/desktop.css.
 const PERIOD_STEP = 428;
 
 interface ICardFlowProps {

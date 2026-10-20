@@ -1,0 +1,130 @@
+/* Стили только для больших экранов.
+   Все базовые правила находятся в mobile.css; здесь — исключительно
+   переопределения внутри медиавыражения для десктопа. */
+
+@media (min-width: 621px) {
+	/* Тултипы показываются на устройствах с курсором. */
+	[data-tooltip]::after {
+		display: block;
+	}
+
+	.app-header {
+		flex-wrap: nowrap;
+		gap: 1.5rem;
+		padding: 1.375rem 1.75rem 1.125rem;
+	}
+
+	.app-header__heading {
+		flex: 1 1 auto;
+	}
+
+	.app-header__eyebrow {
+		font-size: var(--font-size-xs);
+		margin-bottom: 0.125rem;
+	}
+
+	.app-header__title {
+		font-size: var(--font-size-xl);
+	}
+
+	.app-header__hints {
+		flex-direction: row;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: 0.25rem 0.75rem;
+		margin-top: 0.375rem;
+		font-size: var(--font-size-base);
+		line-height: 1.45;
+	}
+
+	.app-header__hint-key {
+		min-width: var(--icon-button-size);
+		padding: 0.125rem 0.375rem;
+		font-size: var(--font-size-sm);
+	}
+
+	.app-header__setting-form input {
+		width: min(26rem, 55vw);
+		font-size: var(--font-size-xl);
+	}
+
+	.app-header__actions {
+		gap: var(--gap-group);
+	}
+
+	/* Подсказки у правого края шапки прижимаем к краю, чтобы они
+	   не выходили за границы окна. */
+	.app-header__actions [data-tooltip]::after {
+		left: auto;
+		right: 0;
+		transform: translate(0, 0.25rem);
+	}
+
+	.app-header__actions [data-tooltip]:hover::after,
+	.app-header__actions [data-tooltip]:focus-visible::after {
+		transform: translate(0, 0);
+	}
+
+	.app-header__actions [data-tooltip].tooltip-bottom::after {
+		transform: translate(0, -0.25rem);
+	}
+
+	.app-header__actions [data-tooltip].tooltip-bottom:hover::after,
+	.app-header__actions [data-tooltip].tooltip-bottom:focus-visible::after {
+		transform: translate(0, 0);
+	}
+
+	.app-header__actions .app-header__save-button {
+		padding: 0.625rem 1rem;
+		font-size: var(--font-size-base);
+	}
+
+	.app-header__save-button > span:last-child {
+		display: inline;
+	}
+
+	.modal-backdrop {
+		padding: 1.25rem;
+	}
+
+	.period-form {
+		width: min(26.875rem, 100%);
+		max-width: none;
+		padding: 1.625rem;
+		border-radius: 1.375rem;
+	}
+
+	.period-form--initial {
+		width: min(42.5rem, 100%);
+		max-width: none;
+	}
+
+	.period-form .period-form__import {
+		position: relative;
+		top: auto;
+		right: auto;
+		z-index: auto;
+		margin-right: auto;
+	}
+
+	.period-form--confirm {
+		width: min(28rem, 100%);
+		max-width: none;
+	}
+
+	.initial-periods {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+	}
+
+	.period-form__types {
+		flex-direction: row;
+	}
+
+	.type-option {
+		width: auto;
+	}
+
+	.period-form__actions {
+		flex-wrap: nowrap;
+	}
+}

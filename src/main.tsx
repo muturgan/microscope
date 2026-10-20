@@ -1,5 +1,5 @@
 import '@xyflow/react/dist/style.css';
-import './style.css';
+import './styles/mobile.css';
 
 import { h, render } from 'preact';
 

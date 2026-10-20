@@ -24,6 +24,7 @@
 | `typescript-eslint` | `^8.71.2` | TypeScript-правила ESLint |
 | esbuild | `^0.28.2` | Транспиляция и минификация CSS |
 | terser | `^5.51.2` | Минификация JavaScript |
+| `html-minifier-terser` | `^7.2.0` | Минификация итогового `index.html` (удаление комментариев и лишних пробелов) |
 | ESLint | `^9.7` | Линтинг |
 | `@eslint/js` | `^10.0.1` | Базовые правила ESLint |
 | `eslint-config-prettier` | `^10.1.8` | Отключение конфликтующих правил ESLint |

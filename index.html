@@ -9,5 +9,13 @@
 	</head>
 	<body>
 		<script type="module" src="/src/main.tsx"></script>
+		<!-- Vite вставляет базовый CSS в <head>, поэтому десктопный файл
+			подключается в конце <body> — после базового бандла, чтобы его
+			переопределения выигрывали каскад. На мобильных не применяется. -->
+		<link
+			rel="stylesheet"
+			href="/src/styles/desktop.css"
+			media="(min-width: 621px)"
+		/>
 	</body>
 </html>

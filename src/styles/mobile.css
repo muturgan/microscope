@@ -1,3 +1,8 @@
+/* Mobile-first стили Microscope.
+   Здесь находятся ВСЕ базовые правила, применяемые на любом экране.
+   Медиавыражений в этом файле нет — десктопные переопределения
+   вынесены в desktop.css. */
+
 :root {
 	/* Layout */
 	--event-card-width: 160px;
@@ -8,8 +13,11 @@
 	);
 	--edge-color: #7c8da8;
 	--edge-width: 2px;
+	--border-width: 1px;
 	--stack-gap: 2.125rem;
 	--period-content-gap: 2.625rem;
+	--radius-modal: 1rem;
+	--radius-subpanel: 1rem;
 	--radius-control: 0.75rem;
 	--radius-button: 0.6875rem;
 	--control-padding: 0.6875rem 0.8125rem;
@@ -31,6 +39,8 @@
 	--gap-tight: 0.5rem;
 	--gap-card: 0.5625rem;
 	--gap-group: 0.75rem;
+	--gap-field: 0.4375rem;
+	--space-title-hint: 0.4375rem;
 	--tooltip-offset: 0.5rem;
 	--tooltip-max-width: 14rem;
 
@@ -77,10 +87,11 @@
 	--color-danger-hover: #8f1d14;
 	--color-good-border: #b8e4cc;
 	--color-good-bg: #edf9f2;
-	--color-good-dot-border: #9ca9bb;
+	--color-good-dot: #2f9e44;
+	--color-good-dot-border: #24803a;
 	--color-bad-border: #c9d1dc;
 	--color-bad-bg: #fdecec;
-	--color-bad-dot: #111827;
+	--color-bad-dot: #b42318;
 
 	--gradient-good: linear-gradient(
 		150deg,
@@ -99,7 +110,8 @@
 	--rgb-card-shadow: 42 63 96;
 	--rgb-slate: 148 163 184;
 	--rgb-accent: 111 155 211;
-	--rgb-bad-dot: 17 24 39;
+	--rgb-good-dot: 47 158 68;
+	--rgb-bad-dot: 180 35 24;
 	--rgb-shadow-dark: 30 41 59;
 
 	--shadow-card: 0 1px 2px rgb(var(--rgb-ink) / 5%);
@@ -137,6 +149,7 @@ body {
 	height: 100dvh;
 	min-height: 100vh;
 	min-height: 100dvh;
+	overflow-x: hidden;
 	background:
 		radial-gradient(circle at 10% 0%, var(--color-glow), transparent 38%),
 		linear-gradient(160deg, var(--color-bg-top) 0%, var(--color-bg) 60%, var(--color-bg-bottom) 100%);
@@ -155,13 +168,16 @@ button:disabled {
 	cursor: not-allowed;
 }
 
+/* ── Header ─────────────────────────────────────────────── */
+
 .app-header {
 	display: flex;
+	flex-wrap: nowrap;
 	align-items: flex-start;
 	justify-content: space-between;
-	gap: 1.5rem;
-	padding: 1.375rem 1.75rem 1.125rem;
-	border-bottom: 1px solid rgb(var(--rgb-slate) / 25%);
+	gap: 0.75rem;
+	padding: 0.875rem 1rem 0.75rem;
+	border-bottom: var(--border-width) solid rgb(var(--rgb-slate) / 25%);
 	background: rgb(var(--rgb-white) / 72%);
 	backdrop-filter: blur(12px);
 	z-index: 2;
@@ -169,11 +185,18 @@ button:disabled {
 	-webkit-user-select: none;
 }
 
+/* Заголовок делит строку с кнопками действий: кнопки остаются в правом
+   верхнем углу, а блок заголовка занимает оставшуюся ширину. */
+.app-header__heading {
+	flex: 1 1 auto;
+	min-width: 0;
+}
+
 .app-header__eyebrow {
 	display: block;
-	margin-bottom: 0.125rem;
+	margin-bottom: 0.0625rem;
 	color: var(--color-text-muted);
-	font-size: var(--font-size-xs);
+	font-size: var(--font-size-2xs);
 	font-weight: 700;
 	letter-spacing: 0.08em;
 	text-transform: uppercase;
@@ -181,7 +204,7 @@ button:disabled {
 
 .app-header__title {
 	margin: 0;
-	font-size: var(--font-size-xl);
+	font-size: var(--font-size-lg);
 	letter-spacing: var(--letter-spacing-title);
 	overflow-wrap: anywhere;
 }
@@ -200,7 +223,7 @@ button:disabled {
 	width: var(--action-button-size);
 	height: var(--action-button-size);
 	padding: 0;
-	border: 1px solid var(--color-border-add);
+	border: var(--border-width) solid var(--color-border-add);
 	border-radius: 50%;
 	background: var(--color-surface);
 	color: var(--color-add-text);
@@ -232,15 +255,16 @@ button:disabled {
 }
 
 .app-header__setting-form input {
-	width: min(26rem, 55vw);
+	width: min(20rem, 70vw);
+	max-width: 100%;
 	padding: var(--compact-padding);
-	border: 1px solid var(--color-border-input);
+	border: var(--border-width) solid var(--color-border-input);
 	border-radius: var(--radius-button);
 	outline: none;
 	background: var(--color-surface);
 	color: var(--color-text);
 	font: inherit;
-	font-size: var(--font-size-xl);
+	font-size: var(--font-size-lg);
 	font-weight: 700;
 	letter-spacing: var(--letter-spacing-title);
 	user-select: text;
@@ -251,25 +275,33 @@ button:disabled {
 	box-shadow: var(--shadow-focus-soft);
 }
 
-.app-header__subtitle {
-	max-width: 40.625rem;
-	margin: 0.375rem 0 0;
+.app-header__hints {
+	display: flex;
+	flex-direction: column;
+	gap: 0.25rem;
+	margin: 0.25rem 0 0;
 	color: var(--color-text-secondary);
-	font-size: var(--font-size-base);
-	line-height: 1.45;
+	font-size: var(--font-size-xs);
+	line-height: 1.4;
+}
+
+.app-header__hint {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.25rem;
 }
 
 .app-header__hint-key {
 	display: inline-flex;
 	align-items: center;
 	justify-content: center;
-	min-width: var(--icon-button-size);
-	padding: 0.125rem 0.375rem;
-	border: 1px solid var(--color-control-border);
+	min-width: auto;
+	padding: 0.0625rem 0.3125rem;
+	border: var(--border-width) solid var(--color-control-border);
 	border-radius: var(--radius-small);
 	background: var(--color-surface);
 	box-shadow: 0 1px 2px rgb(var(--rgb-ink) / 8%);
-	font-size: var(--font-size-sm);
+	font-size: var(--font-size-xs);
 	line-height: var(--text-line-height);
 	white-space: nowrap;
 	vertical-align: middle;
@@ -279,32 +311,37 @@ button:disabled {
 	display: flex;
 	flex: none;
 	align-items: center;
-	gap: var(--gap-group);
+	gap: var(--gap-tight);
+	margin-left: auto; /* кнопки прижаты к правому краю */
 }
 
-.app-header__count {
-	flex: none;
-	padding: 0.4375rem 0.75rem;
-	border: 1px solid var(--color-border-subtle);
-	border-radius: 999px;
-	background: var(--color-surface);
-	color: var(--color-text-count);
-	font-size: var(--font-size-sm);
-	font-weight: 600;
-	white-space: nowrap;
-}
-
-.app-header__save-button {
+/* 0,2,0 — перебивает базовый .button, чтобы на мобильных кнопки
+   с иконками были компактными. */
+.app-header__actions .app-header__save-button {
 	position: relative;
 	display: inline-flex;
 	align-items: center;
 	gap: var(--gap-inline);
+	padding: 0.5rem;
+	font-size: var(--font-size-sm);
 	white-space: nowrap;
 }
 
+/* На мобильных у кнопок действий остаются только иконки. */
+.app-header__save-button > span:last-child {
+	display: none;
+}
+
+/* ── Flow / workspace ───────────────────────────────────── */
+
 .flow {
-	flex: 1;
+	flex: 1 1 auto;
 	min-height: 0;
+	height: 0; /* заставляет flex-потомка занять оставшееся пространство */
+}
+
+.flow .react-flow {
+	height: 100%;
 }
 
 .react-flow__background {
@@ -312,7 +349,7 @@ button:disabled {
 }
 
 .react-flow__controls {
-	border: 1px solid var(--color-border-controls);
+	border: var(--border-width) solid var(--color-border-controls);
 	border-radius: var(--radius-control);
 	box-shadow: 0 8px 24px rgb(var(--rgb-shadow-dark) / 10%);
 	overflow: hidden;
@@ -327,6 +364,8 @@ button:disabled {
 	stroke: var(--edge-color);
 	stroke-width: var(--edge-width);
 }
+
+/* ── Cards ──────────────────────────────────────────────── */
 
 .period-group {
 	display: flex;
@@ -366,7 +405,7 @@ button:disabled {
 	width: var(--event-card-width);
 	min-height: 4.5rem;
 	padding: 0.875rem 1.5rem;
-	border: 1px solid var(--color-card-border);
+	border: var(--border-width) solid var(--color-card-border);
 	border-radius: 0.875rem;
 	background: var(--color-surface);
 	box-shadow:
@@ -413,7 +452,7 @@ button:disabled {
 	width: var(--scene-card-width);
 	min-height: 4rem;
 	padding: 0.75rem 1.25rem;
-	border: 1px solid var(--color-card-border);
+	border: var(--border-width) solid var(--color-card-border);
 	border-radius: var(--radius-control);
 	background: var(--color-surface);
 	box-shadow:
@@ -460,7 +499,7 @@ button:disabled {
 	width: 100%;
 	min-height: 6rem;
 	padding: 1.125rem 1.625rem;
-	border: 1px solid var(--color-card-border);
+	border: var(--border-width) solid var(--color-card-border);
 	border-radius: 1.125rem;
 	background: var(--color-surface);
 	box-shadow:
@@ -514,8 +553,8 @@ button:disabled {
 
 .period-dot--good {
 	border: 1.5px solid var(--color-good-dot-border);
-	background: var(--color-surface);
-	box-shadow: inset 0 0 0 2px var(--color-surface), 0 0 0 1px rgb(var(--rgb-slate) / 28%);
+	background: var(--color-good-dot);
+	box-shadow: 0 0 0 1px rgb(var(--rgb-good-dot) / 12%);
 }
 
 .period-dot--bad {
@@ -536,7 +575,7 @@ button:disabled {
 	justify-content: center;
 	gap: 0.0625rem;
 	padding: 0;
-	border: 1px solid var(--color-border-add);
+	border: var(--border-width) solid var(--color-border-add);
 	border-radius: 50%;
 	background: var(--color-surface);
 	color: var(--color-add-text);
@@ -550,12 +589,18 @@ button:disabled {
 		transform var(--transition-fast);
 }
 
+/* ── Тултипы ─────────────────────────────────────────────── */
+
+/* На сенсорных экранах hover-тултипы не работают, а их псевдоэлементы
+   всегда остаются в раскладке и расширяют страницу за пределы экрана.
+   Показываются только на больших экранах (см. desktop.css). */
 [data-tooltip]::after {
 	content: attr(data-tooltip);
 	position: absolute;
 	bottom: calc(100% + var(--tooltip-offset));
 	left: 50%;
 	z-index: 30;
+	display: none;
 	width: max-content;
 	max-width: var(--tooltip-max-width);
 	padding: var(--compact-padding);
@@ -594,6 +639,8 @@ button:disabled {
 	transform: translate(-50%, 0);
 }
 
+/* ── Кнопки редактирования/удаления ─────────────────────── */
+
 .edit-button,
 .delete-button {
 	position: absolute;
@@ -604,7 +651,7 @@ button:disabled {
 	width: var(--action-button-size);
 	height: var(--action-button-size);
 	padding: 0;
-	border: 1px solid var(--color-border-add);
+	border: var(--border-width) solid var(--color-border-add);
 	border-radius: 50%;
 	background: var(--color-surface);
 	color: var(--color-add-text);
@@ -723,23 +770,32 @@ button:disabled {
 	z-index: 20 !important;
 }
 
+/* ── Modals ─────────────────────────────────────────────── */
+
 .modal-backdrop {
 	position: fixed;
 	inset: 0;
 	z-index: 20;
-	display: grid;
-	place-items: center;
-	padding: 1.25rem;
+	display: flex;
+	align-items: flex-start;
+	justify-content: center;
+	overflow-y: auto;
+	overscroll-behavior: contain;
+	padding: 0.75rem;
 	background: rgb(var(--rgb-ink) / 42%);
 	backdrop-filter: blur(4px);
 	animation: fade-in 160ms ease-out;
 }
 
 .period-form {
-	width: min(26.875rem, 100%);
-	padding: 1.625rem;
-	border: 1px solid rgb(var(--rgb-white) / 70%);
-	border-radius: 1.375rem;
+	position: relative;
+	width: 100%;
+	max-width: calc(100vw - 1.5rem);
+	min-width: 0; /* предотвращает расширение модалки за пределы экрана */
+	margin: auto; /* центрирует короткие модалки и даёт прокрутку длинным */
+	padding: 1.25rem;
+	border: var(--border-width) solid rgb(var(--rgb-white) / 70%);
+	border-radius: var(--radius-modal);
 	background: var(--color-surface);
 	box-shadow: 0 30px 80px rgb(var(--rgb-ink) / 30%);
 	animation: pop-in 180ms ease-out;
@@ -752,23 +808,27 @@ button:disabled {
 }
 
 .period-form--initial {
-	width: min(42.5rem, 100%);
+	width: 100%;
+	max-width: calc(100vw - 1.5rem);
+	/* Резервируем полосу сверху под кнопку импорта в правом углу. */
+	padding-top: 3.75rem;
 }
 
 .period-form--confirm {
-	width: min(28rem, 100%);
+	width: 100%;
+	max-width: calc(100vw - 1.5rem);
 }
 
 .initial-periods {
 	display: grid;
-	grid-template-columns: repeat(2, minmax(0, 1fr));
+	grid-template-columns: 1fr;
 	gap: 1rem;
 }
 
 .initial-period {
 	padding: 1rem;
-	border: 1px solid var(--color-border-initial);
-	border-radius: 1rem;
+	border: var(--border-width) solid var(--color-border-initial);
+	border-radius: var(--radius-subpanel);
 	background: var(--color-surface-soft);
 }
 
@@ -778,21 +838,15 @@ button:disabled {
 	letter-spacing: var(--letter-spacing-section);
 }
 
-@media (max-width: 620px) {
-	.initial-periods {
-		grid-template-columns: 1fr;
-	}
-}
-
 .period-form__hint {
-	margin: 0.4375rem 0 1.25rem;
+	margin: var(--space-title-hint) 0 1.25rem;
 	color: var(--color-text-muted);
 	font-size: var(--font-size-base);
 }
 
 .period-form__field {
 	display: grid;
-	gap: 0.4375rem;
+	gap: var(--gap-field);
 	font-size: var(--font-size-sm);
 	font-weight: 600;
 }
@@ -822,7 +876,7 @@ button:disabled {
 .period-form__field input {
 	width: 100%;
 	padding: var(--control-padding);
-	border: 1px solid var(--color-border-input);
+	border: var(--border-width) solid var(--color-border-input);
 	border-radius: var(--radius-button);
 	outline: none;
 	background: var(--color-surface-soft);
@@ -840,6 +894,7 @@ button:disabled {
 
 .period-form__types {
 	display: flex;
+	flex-direction: column;
 	gap: var(--control-gap);
 	margin: 1.125rem 0 0;
 	padding: 0;
@@ -855,10 +910,11 @@ button:disabled {
 .type-option {
 	display: flex;
 	flex: 1;
+	width: 100%;
 	align-items: center;
 	gap: var(--gap-card);
 	padding: var(--control-padding);
-	border: 1px solid var(--color-control-border);
+	border: var(--border-width) solid var(--color-control-border);
 	border-radius: var(--radius-control);
 	background: var(--color-surface-soft);
 	cursor: pointer;
@@ -883,7 +939,7 @@ button:disabled {
 	gap: var(--control-gap);
 	margin-top: 1.125rem;
 	padding: var(--control-padding);
-	border: 1px solid var(--color-control-border);
+	border: var(--border-width) solid var(--color-control-border);
 	border-radius: var(--radius-control);
 	background: var(--color-surface-soft);
 	color: var(--color-text-control);
@@ -901,17 +957,23 @@ button:disabled {
 
 .period-form__actions {
 	display: flex;
+	flex-wrap: wrap;
 	justify-content: flex-end;
 	gap: var(--control-gap);
 	margin-top: 1.5rem;
 }
 
-.period-form__import {
-	position: relative;
+.period-form .period-form__import {
+	/* На мобильных кнопка импорта перенесена в правый верхний угол модалки.
+	   0,2,0 — перебивает базовый `.button`. */
+	position: absolute;
+	top: 1rem;
+	right: 1rem;
+	z-index: 1;
 	display: inline-flex;
 	align-items: center;
 	gap: var(--gap-inline);
-	margin-right: auto;
+	margin: 0;
 }
 
 .period-form__error {
@@ -921,10 +983,12 @@ button:disabled {
 	line-height: var(--text-line-height);
 }
 
+/* ── Buttons ────────────────────────────────────────────── */
+
 .button {
 	position: relative;
 	padding: 0.625rem 1rem;
-	border: 1px solid transparent;
+	border: var(--border-width) solid transparent;
 	border-radius: var(--radius-button);
 	font-size: var(--font-size-base);
 	font-weight: 600;
