@@ -1,4 +1,5 @@
 import { preact } from '@preact/preset-vite';
+import { transform } from 'esbuild';
 import { minify } from 'html-minifier-terser';
 import { defineConfig } from 'vite';
 
@@ -24,6 +25,39 @@ function htmlMinifyPlugin() {
 					minifyJS: false,
 				});
 			},
+		},
+	};
+}
+
+// Vite не минифицирует CSS, подключённый через <link> в index.html
+// (desktop.css): он попадает в ассеты без обработки build.cssMinify.
+// Поэтому минифицируем его отдельно.
+function minifyLinkedCssPlugin() {
+	return {
+		name: 'minify-linked-css',
+		apply: 'build',
+		enforce: 'post',
+		async generateBundle(_options, bundle) {
+			for (const asset of Object.values(bundle)) {
+				if (
+					asset.type !== 'asset' ||
+					!asset.fileName.endsWith('.css') ||
+					!asset.fileName.includes('desktop')
+				) {
+					continue;
+				}
+
+				const source =
+					typeof asset.source === 'string'
+						? asset.source
+						: Buffer.from(asset.source).toString('utf8');
+				const result = await transform(source, {
+					loader: 'css',
+					minify: true,
+				});
+
+				asset.source = result.code;
+			}
 		},
 	};
 }
@@ -82,6 +116,6 @@ export default defineConfig(({ command }) => {
 			factory: 'h',
 			fragment: 'Fragment',
 		},
-		plugins: [preact(), htmlMinifyPlugin()],
+		plugins: [preact(), htmlMinifyPlugin(), minifyLinkedCssPlugin()],
 	};
 });
