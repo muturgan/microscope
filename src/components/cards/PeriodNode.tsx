@@ -66,6 +66,7 @@ export function PeriodNode({ data }: NodeProps<CardFlowNode>) {
 					<span className="period-card__title">{card.title}</span>
 					<span
 						className={`period-dot period-dot--${kindModifier}`}
+						role="img"
 						title={getCardKindLabel(PERIOD_KIND_LABELS, card.kind)}
 						aria-label={getCardKindLabel(PERIOD_KIND_LABELS, card.kind)}
 					/>

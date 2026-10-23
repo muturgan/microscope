@@ -185,14 +185,16 @@ export function App() {
 				onUpdateSettingName={updateSettingName}
 			/>
 
-			<CardFlow
-				cards={cards}
-				onInsert={setInsertAt}
-				onAddEvent={setEventPeriodId}
-				onAddScene={setSceneEventId}
-				onEdit={setEditTarget}
-				onDelete={setDeleteTarget}
-			/>
+			<main>
+				<CardFlow
+					cards={cards}
+					onInsert={setInsertAt}
+					onAddEvent={setEventPeriodId}
+					onAddScene={setSceneEventId}
+					onEdit={setEditTarget}
+					onDelete={setDeleteTarget}
+				/>
+			</main>
 
 			{isInitial ? (
 				<InitialPeriodsForm

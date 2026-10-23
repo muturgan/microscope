@@ -61,6 +61,7 @@ export function SceneCard({
 				<span className="scene-card__title">{scene.title}</span>
 				<span
 					className={`period-dot period-dot--${kindModifier}`}
+					role="img"
 					title={getCardKindLabel(SCENE_KIND_LABELS, scene.kind)}
 					aria-label={getCardKindLabel(SCENE_KIND_LABELS, scene.kind)}
 				/>

@@ -57,6 +57,7 @@ export function CardFields({
 				<div className="period-form__locked-kind">
 					<span
 						className={`period-dot period-dot--${cardKindModifier(kind)}`}
+						aria-hidden="true"
 					/>
 					<span>
 						{kindLegend}: {getCardKindLabel(kindLabels, kind)}
@@ -76,7 +77,10 @@ export function CardFields({
 							checked={kind === CardKind.Good}
 							onChange={() => onKindChange(CardKind.Good)}
 						/>
-						<span className="period-dot period-dot--good" />
+						<span
+							className="period-dot period-dot--good"
+							aria-hidden="true"
+						/>
 						<span>{kindLabels.good}</span>
 					</label>
 
@@ -90,7 +94,10 @@ export function CardFields({
 							checked={kind === CardKind.Bad}
 							onChange={() => onKindChange(CardKind.Bad)}
 						/>
-						<span className="period-dot period-dot--bad" />
+						<span
+							className="period-dot period-dot--bad"
+							aria-hidden="true"
+						/>
 						<span>{kindLabels.bad}</span>
 					</label>
 				</fieldset>

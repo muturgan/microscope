@@ -66,6 +66,7 @@ export function EventCard({
 					<span className="event-card__title">{event.title}</span>
 					<span
 						className={`period-dot period-dot--${kindModifier}`}
+						role="img"
 						title={getCardKindLabel(EVENT_KIND_LABELS, event.kind)}
 						aria-label={getCardKindLabel(EVENT_KIND_LABELS, event.kind)}
 					/>
